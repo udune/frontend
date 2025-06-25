@@ -15,6 +15,13 @@ const FETCH_BOARDS = gql`
   }
 `;
 
+interface IFectchBoards {
+  number: number;
+  writer: string;
+  title: string;
+  contents: string;
+}
+
 export default function StaticRoutingMovedPage() {
   const { data } = useQuery(FETCH_BOARDS);
 
@@ -28,7 +35,7 @@ export default function StaticRoutingMovedPage() {
 
   return (
     <div>
-      {data?.fetchBoards?.map((el) => {
+      {data?.fetchBoards?.map((el: IFectchBoards) => {
         <a key={el.number} href="https://naver.com">
           <div key={el.number} id={el.writer}>
             <Checkbox />
