@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ApolloSetting from "@/commons/settings/06-02-apollo-setting";
+import Layout from "@/commons/layout";
 
 const 철수의폰트 = localFont({
   src: "../../fonts/00-myfont01.woff2",
@@ -26,10 +27,12 @@ interface IProps {
 
 export default function RootLayout({ children }: IProps) {
   return (
-    <html>
+    <html lang="ko">
       <body className={`${철수의폰트.variable} ${글로벌폰트.variable}`}>
         <div>=========여기 위는 레이아웃입니다=========</div>
-        <ApolloSetting>{children}</ApolloSetting>
+        <ApolloSetting>
+          <Layout>{children}</Layout>
+        </ApolloSetting>
         <div>=========여기 아래는 레이아웃입니다=========</div>
       </body>
     </html>
