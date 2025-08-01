@@ -22,6 +22,7 @@
     "@nestjs/swagger": "11",
     "@nestjs/typeorm": "11",
     "antd": "^5.26.2",
+    "apollo-upload-client": "^18.0.1",
     "graphql": "^16.11.0",
     "next": "15.3.3",
     "react": "^19.0.0",

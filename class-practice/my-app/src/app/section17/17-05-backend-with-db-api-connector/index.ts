@@ -25,23 +25,22 @@ type Mutation {
 
 const resolvers = {
   Query: {
-    fetchBoards: () => {
-      return [
-        {
-          number: 1,
-          writer: "철수",
-          title: "안녕하세요",
-          contents: "반갑습니다",
-        },
-      ];
+    fetchBoards: async () => {
+      // 1. 모두 꺼내기
+      Board.find();
+
+      // 2. 한개만 꺼내기
+      const result = await Board.findOne({
+        where: { number: 3 },
+      });
     },
   },
 
   Mutation: {
-    createBoard: (parent, args, context, info) => {
-      console.log("받은 작성자: ", args.writer);
-      console.log("받은 제목: ", args.title);
-      console.log("받은 내용: ", args.contents);
+    createBoard: (parent: any, args: any, context: any, info: any) => {
+      Board.insert({
+        ...args,
+      });
       return "게시글 등록에 성공했어요!!";
     },
   },
