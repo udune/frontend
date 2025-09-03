@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>Promise 연습</title>
+    <script>
+      const onClickThen = () => {
+        new Promise((성공했을때실행시키는함수, 실패했을때실행시키는함수) => {
+          setTimeout(() => {
+            try {
+              const response = "강아지.jpg"; // 2초가 걸려서 백엔드에서 "강아지" 이미지 받아옴
+              성공했을때실행시키는함수(response);
+            } catch (error) {
+              실패했을때실행시키는함수(error);
+            }
+          }, 2000);
+        })
+          .then((response) => {
+            console.log(response); // 강아지.jpg
+          })
+          .catch((err) => {
+            console.log(err); // 실패했습니다.
+          });
+      };
+
+      const onClickAwait = async () => {
+        await new Promise(
+          (성공했을때실행시키는함수, 실패했을때실행시키는함수) => {
+            try {
+              setTimeout(() => {
+                const response = "고양이.jpg"; // 2초가 걸려서 백엔드에서 "고양이" 이미지 받아옴
+                성공했을때실행시키는함수(response);
+              }, 2000);
+            } catch (err) {
+              실패했을때실행시키는함수(err);
+            }
+          }
+        );
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="onClickThen()">Promise 실행하기(.then)</button>
+    <button onclick="onClickAwait()">Promise 실행하기(await)</button>
+  </body>
+</html>

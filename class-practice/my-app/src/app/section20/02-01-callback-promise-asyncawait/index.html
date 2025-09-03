@@ -1,0 +1,76 @@
+`http://numbersapi.com/random?min=1&max=100`
+`https://koreanjson.com/posts/${num}`
+`https://koreanjson.com/posts?userId=${num}`
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>콜백과 친구들</title>
+    <script>
+      const onClickCallback = () => {
+        const aa = new XMLHttpRequest();
+        aa.open("get", `http://numbersapi.com/random?min=1&max=100`);
+        aa.send();
+        aa.addEventListener("load", (res) => {
+          console.log(res);
+          const num = res.target.response.split(" ")[0];
+          const bb = new XMLHttpRequest();
+          bb.open("get", `https://koreanjson.com/posts/${num}`);
+          bb.send();
+          bb.addEventListener("load", (res) => {
+            console.log(res);
+            const userId = JSON.parse(res.target.response).UserId;
+
+            const cc = new XMLHttpRequest();
+            cc.open("get", `https://koreanjson.com/posts?userId=${userId}`);
+            cc.send();
+            cc.addEventListener("load", (res) => {
+              console.log(res.target.response);
+            });
+          });
+        });
+      };
+
+      const onClickPromise = () => {
+        fetch(`http://numbersapi.com/random?min=1&max=100`)
+          .then((res) => res.text())
+          .then((data) => {
+            const num = data.split(" ")[0];
+
+            fetch(`https://koreanjson.com/posts/${num}`)
+              .then((res) => res.json())
+              .then((data) => {
+                const userId = data.UserId;
+
+                fetch(`https://koreanjson.com/posts?userId=${userId}`)
+                  .then((res) => res.json())
+                  .then((data) => {
+                    console.log(data);
+                  });
+              });
+          });
+      };
+
+      const onClickAsyncAwait = async () => {
+        const res1 = await fetch(`http://numbersapi.com/random?min=1&max=100`);
+        const data1 = await res1.text();
+        const num = data1.split(" ")[0];
+
+        const res2 = await fetch(`https://koreanjson.com/posts/${num}`);
+        const data2 = await res2.json();
+        const userId = data2.UserId;
+
+        const res3 = await fetch(
+          `https://koreanjson.com/posts?userId=${userId}`
+        );
+        const data3 = await res3.json();
+        console.log(data3);
+      };
+    </script>
+  </head>
+  <body>
+    <button onclick="onClickCallback()">Callback 연습하기!!</button>
+    <button onclick="onClickPromise()">Promise 연습하기!!</button>
+    <button onclick="onClickAsyncAwait()">Async/Await 연습하기!!</button>
+  </body>
+</html>
